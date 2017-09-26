@@ -6,7 +6,8 @@ import time
 import numpy as np
 from math import sqrt
 #bi = np.random.binomial(n=100, p=0.5, size=10000)
-n = np.random.normal(100*0.5, sqrt(100*0.5*0.5), size=4350)
+#n = np.random.normal(100*0.5, sqrt(100*0.5*0.5), size=4350)
+n = np.random.poisson(60,13050)
 #startdate = datetime(2017,1,1,13,00)
 
 def random_date(start,l):
@@ -35,17 +36,20 @@ def a(num):
 
 if __name__=='__main__':
   #csv = open("data.csv", "w") 
-  numdays=30
+  numdays=90
   base = datetime.today()
   date_list = [base - timedelta(days=x) for x in range(0, numdays)]
   timestamp = []
   nump=a(n)
+  index=0;
   for date in date_list:
     for x in reversed(list(random_date(date,144))):
-      timestamp.append(x.strftime("%d/%m/%y %H:%M").split(" "))
+      timestamp.append(x.strftime("%d/%m/%Y %H:%M").split(" "))
       #print x.strftime("%d/%m/%y %H:%M")
   for i,j in zip(timestamp,nump):
+      i.insert(0,index)
       i.append(j)
+      index=index+1
 
   path="data.csv"
   csv_writer(timestamp,path)
